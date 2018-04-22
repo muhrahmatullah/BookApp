@@ -23,14 +23,14 @@ import java.util.List;
 public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookViewHolder>{
 
     private List<VolumeInfo> list;
-    private Context context;
-    List<String> auth;
     private BooksAdapterListener listener;
 
-    public BookListAdapter(List<VolumeInfo> list, BooksAdapterListener listener, Context context) {
-        this.list = list;
+    public BookListAdapter(BooksAdapterListener listener) {
         this.listener = listener;
-        this.context = context;
+    }
+    public void setItems(List<VolumeInfo>list){
+        this.list = list;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -45,11 +45,6 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
     public void onBindViewHolder(final BookViewHolder holder, final int position) {
         holder.title.setText(list.get(position).getTitle());
 
-        Picasso.with(context)
-                .load(list.get(position).getImageLinks().getSmallThumbnail())
-                .placeholder(R.drawable.placeholder)
-                .into(holder.cover);
-
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +57,10 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
                 listener.onImageSelected(position);
             }
         });
+
+        Picasso.with(holder.cover.getContext())
+                .load(list.get(position).getImageLinks().getSmallThumbnail())
+                .into(holder.cover);
 
     }
 
