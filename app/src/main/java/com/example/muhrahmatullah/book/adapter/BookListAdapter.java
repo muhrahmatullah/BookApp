@@ -24,9 +24,14 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
 
     private List<VolumeInfo> list;
     private BooksAdapterListener listener;
+    Picasso picasso;
 
     public BookListAdapter(BooksAdapterListener listener) {
         this.listener = listener;
+    }
+    public BookListAdapter(BooksAdapterListener listener, Picasso picasso) {
+        this.listener = listener;
+        this.picasso = picasso;
     }
     public void setItems(List<VolumeInfo>list){
         this.list = list;
